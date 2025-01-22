@@ -31,12 +31,12 @@
   </div>
 
   <!-- Terminal -->
-  <!-- <div class="terminal" [ngSwitch]="selection.value">
-      <pre *ngSwitchDefault>ng generate component xyz</pre>
-      <pre *ngSwitchCase="'bg2'">ng add &#64;angular/material</pre>
-      <pre *ngSwitchCase="'bg3'">ng add &#64;angular/pwa</pre>
-      <pre *ngSwitchCase="'bg4'">ng add _____</pre>
-  </div> -->
+  <div class="Terminal" [ngSwitch]="selection.value">
+      <div *ngSwitchDefault class="background" [ngStyle]="{backgroundImage: 'url(https://images.pexels.com/photos/531880/pexels-photo-531880.jpeg)'}"></div>
+      <div *ngSwitchCase="'bg2'" class="background" [ngStyle]="{backgroundImage: 'url(https://www.pixelstalk.net/wp-content/uploads/2016/04/Download-desktop-ocean-backgrounds-wallpapers.jpg)'}"></div>
+      <div *ngSwitchCase="'bg3'" class="background" [ngStyle]="{backgroundImage: 'url(https://www.pixelstalk.net/wp-content/uploads/2016/07/HD-Peaceful-Backgrounds.jpg)'}"></div>
+      <div *ngSwitchCase="'bg4'" class="background" [ngStyle]="{backgroundImage: 'url(https://www.baltana.com/files/wallpapers-5/Nature-Photoshop-Background-Best-Wallpaper-16407.jpeg)'}"></div>
+  </div>
 
 </div>
 

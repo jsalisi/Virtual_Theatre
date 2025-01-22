@@ -20,6 +20,17 @@
     margin: 0;
   }
 
+  .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: 50%;
+    height: 50%;
+  }
+
   .spacer {
     flex: 1;
   }
@@ -57,16 +68,12 @@
   }
 
   .content {
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 100vw;
     display: flex;
-    position: absolute;
-    margin: auto;
+    margin: 82px auto 32px;
+    padding: 0 16px;
+    max-width: 960px;
     flex-direction: column;
     align-items: center;
-    background-image: url('https://images.pexels.com/photos/531880/pexels-photo-531880.jpeg');
   }
 
   svg.material-icons {
@@ -83,12 +90,10 @@
   }
 
   .card-container {
-    position: absolute;
-    bottom: 0;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin-bottom: 16px;
+    margin-top: 16px;
   }
 
   .card {
