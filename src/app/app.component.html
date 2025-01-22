@@ -2,10 +2,6 @@
 
 <div class="content" role="main">
 
-  <!-- Next Steps -->
-  <h1>Upload your assests!</h1>
-  <p>Create your scenario</p>
-
   <input type="hidden" #selection>
 
   <div class="card-container">
@@ -31,7 +27,7 @@
   </div>
 
   <!-- Terminal -->
-  <div class="Terminal" [ngSwitch]="selection.value">
+  <div [ngSwitch]="selection.value">
       <div *ngSwitchDefault class="background" [ngStyle]="{backgroundImage: 'url(https://images.pexels.com/photos/531880/pexels-photo-531880.jpeg)'}"></div>
       <div *ngSwitchCase="'bg2'" class="background" [ngStyle]="{backgroundImage: 'url(https://www.pixelstalk.net/wp-content/uploads/2016/04/Download-desktop-ocean-backgrounds-wallpapers.jpg)'}"></div>
       <div *ngSwitchCase="'bg3'" class="background" [ngStyle]="{backgroundImage: 'url(https://www.pixelstalk.net/wp-content/uploads/2016/07/HD-Peaceful-Backgrounds.jpg)'}"></div>
