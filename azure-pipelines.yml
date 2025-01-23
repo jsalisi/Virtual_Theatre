@@ -20,6 +20,6 @@ steps:
 
 - task: PublishPipelineArtifact@1
   inputs:
-    targetPath: '$(Pipeline.Workspace)/dist'
+    targetPath: '$(Pipeline.Workspace)/s/dist'
     artifact: 'drop'
     publishLocation: 'pipeline'
