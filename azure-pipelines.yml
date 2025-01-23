@@ -3,6 +3,11 @@
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
+trigger:
+  branches:
+    include:
+      - main
+
 pool:
   vmImage: ubuntu-latest
 
@@ -20,8 +25,7 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    SourceFolder: '$(Pipeline.Workspace)/s/dist'
-    Contents: '**'
+    Contents: 'dist/virtual-theatre/**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
     CleanTargetFolder: true
     OverWrite: true
@@ -31,3 +35,11 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
     publishLocation: 'Container'
+
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: 'Azure subscription 1(faa5f0d4-459f-4fa4-9c64-a349dca6bd20)'
+    appType: 'webAppLinux'
+    appName: 'vtheatre-dev'
+    package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
+    runtimeStack: 'NODE|18-lts'
