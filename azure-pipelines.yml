@@ -41,6 +41,7 @@ steps:
     buildType: 'current'
     downloadType: 'single'
     artifactName: 'drop'
+    itemPattern: 'dist/virtual-theatre/**'
     downloadPath: '$(System.ArtifactsDirectory)'
     cleanDestinationFolder: true
 
