@@ -39,7 +39,8 @@ steps:
 - task: DownloadBuildArtifacts@1
   inputs:
     buildType: 'current'
-    downloadType: 'specific'
+    downloadType: 'single'
+    artifactName: 'drop'
     itemPattern: 'virtual-theatre/**'
     downloadPath: '$(System.ArtifactsDirectory)'
     cleanDestinationFolder: true
