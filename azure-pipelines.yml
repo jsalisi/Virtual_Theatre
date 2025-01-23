@@ -41,14 +41,13 @@ steps:
     buildType: 'current'
     downloadType: 'single'
     artifactName: 'drop'
-    itemPattern: 'virtual-theatre/**'
     downloadPath: '$(System.ArtifactsDirectory)'
     cleanDestinationFolder: true
 
-# - task: AzureWebApp@1
-#   inputs:
-#     azureSubscription: 'Azure subscription 1(faa5f0d4-459f-4fa4-9c64-a349dca6bd20)'
-#     appType: 'webAppLinux'
-#     appName: 'vtheatre-dev'
-#     package: '$(System.ArtifactsDirectory)'
-#     runtimeStack: 'NODE|18-lts'
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: 'Azure subscription 1(faa5f0d4-459f-4fa4-9c64-a349dca6bd20)'
+    appType: 'webAppLinux'
+    appName: 'vtheatre-dev'
+    package: '$(System.ArtifactsDirectory)'
+    runtimeStack: 'NODE|18-lts'
