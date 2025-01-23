@@ -32,17 +32,17 @@ steps:
 
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/dist/virtual-theatre/'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/dist/'
     ArtifactName: 'drop'
     publishLocation: 'Container'
 
-# - task: DownloadBuildArtifacts@1
-#   inputs:
-#     buildType: 'current'
-#     downloadType: 'single'
-#     artifactName: 'drop'
-#     downloadPath: '$(System.ArtifactsDirectory)'
-#     cleanDestinationFolder: true
+- task: DownloadBuildArtifacts@1
+  inputs:
+    buildType: 'current'
+    downloadType: 'specific'
+    itemPattern: 'virtual-theatre/**'
+    downloadPath: '$(System.ArtifactsDirectory)'
+    cleanDestinationFolder: true
 
 # - task: AzureWebApp@1
 #   inputs:
