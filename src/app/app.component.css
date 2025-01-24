@@ -37,6 +37,10 @@ button:hover {
   background-color: rgba(0, 0, 0, 0.7);
 }
 
+.file-input {
+  display: none;
+}
+
 .background-container {
   position: absolute;
   top: 0;

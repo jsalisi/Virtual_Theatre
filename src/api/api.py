@@ -27,4 +27,4 @@ async def upload_images(image: Images):
 
 @app.get("/testimage")
 async def get_images():
-    return {"background_url": "https://images.pexels.com/photos/2574997/pexels-photo-2574997.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"}
+    return {"background_url": "https://vignette4.wikia.nocookie.net/club-penguin-rewritten/images/2/2a/Iceberg.png/revision/latest?cb=20170224125550"}

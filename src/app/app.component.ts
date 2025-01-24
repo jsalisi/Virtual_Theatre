@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -7,12 +8,32 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Virtual_Theatre';
+  imageFile: File | any = null;
+  baseUrl: string = 'http://localhost:8000';
 
-  imagePath: string =
-    'https://vignette4.wikia.nocookie.net/club-penguin-rewritten/images/2/2a/Iceberg.png/revision/latest?cb=20170224125550';
+  constructor(private httpClient: HttpClient) {}
 
-  uploadBackgroundImage() {
-    this.imagePath =
-      'https://images.pexels.com/photos/2574997/pexels-photo-2574997.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260';
+  getImageData() {
+    this.httpClient.get(this.baseUrl + '/api').subscribe((res) => {
+      console.log(res);
+    });
+  }
+
+  getTestImage() {
+    this.httpClient.get(this.baseUrl + '/testimage').subscribe((res) => {
+      this.imageFile = (res as any).background_url;
+      console.log((res as any).background_url);
+    });
+  }
+
+  uploadBackgroundImage(event: any) {
+    this.imageFile = event.target.files[0];
+
+    const fd = new FormData();
+    fd.append('filename', this.imageFile, this.imageFile.name);
+    console.log(fd);
+    this.httpClient.post(this.baseUrl + '/api', fd).subscribe((res) => {
+      console.log(res);
+    });
   }
 }

@@ -1,13 +1,20 @@
 <!-- Background -->
 <div
   class="background-container"
-  [ngStyle]="{'background-image': 'url('+ imagePath +')'}"
+  [ngStyle]="{'background-image': 'url('+ imageFile +')'}"
 >
   <!-- Asset Display -->
   <div class="example-box" cdkDrag>Drag me around</div>
 
   <!-- Upload Interface -->
-  <button (click)="uploadBackgroundImage()">Upload</button>
+  <input #file class="file-input" type="file" accept="image/*" (change)="uploadBackgroundImage($event)">
+  <button #upload (click)="file.click()">Upload file</button>
+
+  <!-- Test Button -->
+   <button #upload (click)="getImageData()">Get Background Data</button>
+
+   <!-- Test Background Swap Button -->
+   <button #upload (click)="getTestImage()">Get Test Image</button>
 </div>
 
 <!-- Do Not Remove -->
