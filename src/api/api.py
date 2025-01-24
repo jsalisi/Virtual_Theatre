@@ -1,8 +1,13 @@
 from typing import Annotated
-from fastapi import FastAPI, Form, UploadFile
+from fastapi import FastAPI, Form, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from azure.storage.blob.aio import BlobServiceClient
 
-import aiofiles
+import aiohttp
+import os
+from dotenv import load_dotenv, dotenv_values
+
+load_dotenv()
 
 app = FastAPI()
 
@@ -32,8 +37,22 @@ async def get_images():
 
 @app.post("/api/upload/")
 async def create_upload_file(file: UploadFile):
-    out_file_path = "./" + file.filename
-    async with aiofiles.open(out_file_path, 'wb') as out_file:
-        content = await file.read()
-        await out_file.write(content)
-    return {"Result": out_file_path}
+    name = file.filename
+    type = file.content_type
+    return await uploadtoazure(file,name,type)
+
+async def uploadtoazure(file: UploadFile,file_name: str,file_type:str):
+    connect_str = os.getenv("CONNECTION_STRING")
+    blob_service_client = BlobServiceClient.from_connection_string(connect_str)
+    container_name = "vtheatre-image-storage"
+    async with blob_service_client:
+            container_client = blob_service_client.get_container_client(container_name)
+            try:
+                blob_client = container_client.get_blob_client(file_name)
+                f = await file.read()
+                await blob_client.upload_blob(f)
+            except Exception as e:
+                print(e)
+                return HTTPException(401, "Something went terribly wrong..")
+    
+    return "{'Return':'OK'}"

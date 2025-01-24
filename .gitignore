@@ -42,6 +42,6 @@ testem.log
 Thumbs.db
 
 # Python
-
+.env
 __pycache__
 /src/api/venv
