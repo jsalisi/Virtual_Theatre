@@ -29,12 +29,6 @@ app.add_middleware(
 async def root():
     return {"message": "Hello World"}
 
-image_list = []
-
-@app.get("/api/")
-async def get_images():
-    return {"Images": image_list}
-
 @app.post("/api/upload/")
 async def create_upload_file(file: UploadFile):
     name = file.filename
@@ -55,4 +49,4 @@ async def uploadtoazure(file: UploadFile,file_name: str,file_type:str):
                 print(e)
                 return HTTPException(401, "Something went terribly wrong..")
     
-    return "{'Return':'OK'}"
+    return ("{url}/{filename}".format(url=os.getenv("BASE_IMAGE_URL"), filename=file_name))

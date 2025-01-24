@@ -10,14 +10,9 @@ export class AppComponent {
   title = 'Virtual_Theatre';
   imageFile: File | any = null;
   baseUrl: string = 'http://localhost:8000';
+  backgroundUrl: string | any = null;
 
   constructor(private httpClient: HttpClient) {}
-
-  getImageData() {
-    this.httpClient.get(this.baseUrl + '/api').subscribe((res) => {
-      console.log(res);
-    });
-  }
 
   uploadBackgroundImage(event: any) {
     this.imageFile = event.target.files[0];
@@ -26,6 +21,7 @@ export class AppComponent {
     fd.append("file", this.imageFile);
     this.httpClient.post(this.baseUrl + '/api/upload', fd).subscribe((res) => {
       console.log(res);
+      this.backgroundUrl = res;
     });
   }
 }
