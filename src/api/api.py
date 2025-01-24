@@ -1,7 +1,24 @@
-from fastapi import FastAPI
-from model import Images
+from typing import Annotated
+from fastapi import FastAPI, Form, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
+
+import aiofiles
 
 app = FastAPI()
+
+origins = [
+    "http://localhost",
+    "http://localhost:4200",
+    "http://localhost:8000"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 async def root():
@@ -9,22 +26,14 @@ async def root():
 
 image_list = []
 
-@app.get("/api")
+@app.get("/api/")
 async def get_images():
     return {"Images": image_list}
 
-@app.get("/api/{image_id}")
-async def get_images(image_id: int):
-    for image in image_list:
-        if image.id == image_id:
-            return {"Image": image}
-    return {"message": "No image found"}
-
-@app.post("/api")
-async def upload_images(image: Images):
-    image_list.append(image)
-    return image
-
-@app.get("/testimage")
-async def get_images():
-    return {"background_url": "https://vignette4.wikia.nocookie.net/club-penguin-rewritten/images/2/2a/Iceberg.png/revision/latest?cb=20170224125550"}
+@app.post("/api/upload/")
+async def create_upload_file(file: UploadFile):
+    out_file_path = "./" + file.filename
+    async with aiofiles.open(out_file_path, 'wb') as out_file:
+        content = await file.read()
+        await out_file.write(content)
+    return {"Result": out_file_path}
