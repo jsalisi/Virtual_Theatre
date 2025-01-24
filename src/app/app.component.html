@@ -1,10 +1,13 @@
 <!-- Background -->
-<div class="background"></div>
+<div
+  class="background-container"
+  [ngStyle]="{'background-image': 'url('+ imagePath +')'}"
+>
+  <!-- Asset Display -->
+  <div class="example-box" cdkDrag>Drag me around</div>
 
-<!-- Upload Interface -->
-
-<div class="example-box" cdkDrag>
-  Drag me around
+  <!-- Upload Interface -->
+  <button (click)="uploadBackgroundImage()">Upload</button>
 </div>
 
 <!-- Do Not Remove -->
