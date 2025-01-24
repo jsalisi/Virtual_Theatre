@@ -44,7 +44,7 @@ async def uploadtoazure(file: UploadFile,file_name: str,file_type:str):
             try:
                 blob_client = container_client.get_blob_client(file_name)
                 f = await file.read()
-                await blob_client.upload_blob(f)
+                await blob_client.upload_blob(f, overwrite=True)
             except Exception as e:
                 print(e)
                 return HTTPException(401, "Something went terribly wrong..")
