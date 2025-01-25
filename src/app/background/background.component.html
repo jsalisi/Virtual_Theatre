@@ -1,0 +1,9 @@
+<!-- Background -->
+<div
+  class="background-container"
+  [ngStyle]="{'background-image': 'url('+ backgroundUrl +')'}"
+>
+  <!-- Upload Interface -->
+  <input #file class="file-input" type="file" accept="image/*" (change)="uploadBackgroundImage($event)">
+  <button #upload (click)="file.click()">Upload file</button>
+</div>

@@ -1,15 +1,8 @@
 <!-- Background -->
-<div
-  class="background-container"
-  [ngStyle]="{'background-image': 'url('+ backgroundUrl +')'}"
->
-  <!-- Asset Display -->
-  <div class="example-box" cdkDrag>Drag me around</div>
+<app-background></app-background>
 
-  <!-- Upload Interface -->
-  <input #file class="file-input" type="file" accept="image/*" (change)="uploadBackgroundImage($event)">
-  <button #upload (click)="file.click()">Upload file</button>
-</div>
+<!-- Moveable Asset Display -->
+<app-prop></app-prop>
 
 <!-- Do Not Remove -->
 <router-outlet></router-outlet>
