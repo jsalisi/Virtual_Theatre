@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-background',
@@ -10,19 +11,12 @@ import { CommonModule } from '@angular/common';
   styleUrl: './background.component.css',
 })
 export class BackgroundComponent {
-  imageFile: File | any = null;
-  baseUrl: string = 'http://localhost:8000';
   backgroundUrl: string | any = null;
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private dataService: DataService) {}
 
   uploadBackgroundImage(event: any) {
-    this.imageFile = event.target.files[0];
-
-    const fd = new FormData();
-    fd.append('file', this.imageFile);
-    this.httpClient.post(this.baseUrl + '/api/upload', fd).subscribe((res) => {
-      console.log(res);
+    this.dataService.uploadFileData(event).subscribe((res) => {
       this.backgroundUrl = res;
     });
   }

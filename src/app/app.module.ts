@@ -9,8 +9,6 @@ import { provideHttpClient } from '@angular/common/http';
 import { BackgroundComponent } from './background/background.component';
 import { PropComponent } from './prop/prop.component';
 
-
-
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, AppRoutingModule, DragDropModule,BackgroundComponent, PropComponent],
