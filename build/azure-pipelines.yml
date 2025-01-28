@@ -22,7 +22,7 @@ stages:
       - script: |
           npm install -g @angular/cli
           npm install
-          ng build
+          ng build --configuration production
         displayName: 'npm install and build'
 
       - task: CopyFiles@2
