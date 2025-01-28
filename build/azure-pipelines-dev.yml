@@ -22,36 +22,3 @@ jobs:
         npm install
         ng build
       displayName: 'npm install and build'
-
-    - task: CopyFiles@2
-      inputs:
-        Contents: 'dist/virtual-theatre/**'
-        TargetFolder: '$(Build.ArtifactStagingDirectory)'
-        CleanTargetFolder: true
-        OverWrite: true
-      displayName: 'Copy Web Files'
-
-    - task: PublishBuildArtifacts@1
-      inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)/dist/virtual-theatre/'
-        ArtifactName: 'virtual-theatre-web'
-        publishLocation: 'Container'
-      displayName: 'Publish Web Files'
-
-  - job: API
-    pool: Default
-    steps:
-    - task: CopyFiles@2
-      inputs:
-        Contents: 'src/api/**'
-        TargetFolder: '$(Build.ArtifactStagingDirectory)'
-        CleanTargetFolder: true
-        OverWrite: true
-      displayName: 'Copy API files'
-
-    - task: PublishBuildArtifacts@1
-      inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)/src/api/'
-        ArtifactName: 'virtual-theatre-api'
-        publishLocation: 'Container'
-      displayName: 'Publish API files'
