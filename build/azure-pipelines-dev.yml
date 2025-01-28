@@ -32,8 +32,8 @@ steps:
 
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/dist/'
-    ArtifactName: 'Web'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/dist/virtual-theatre/'
+    ArtifactName: 'virtual-theatre-web'
     publishLocation: 'Container'
   displayName: 'Publish Web Files'
 
@@ -47,7 +47,7 @@ steps:
 
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/src/'
-    ArtifactName: 'API'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/src/api/'
+    ArtifactName: 'virtual-theatre-api'
     publishLocation: 'Container'
   displayName: 'Publish API files'
