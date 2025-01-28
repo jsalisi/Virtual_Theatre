@@ -1,44 +1,8 @@
-<!-- Upload Interface -->
+<!-- Dynamic Background -->
+<app-background></app-background>
 
-<div class="content" role="main">
-
-  <input type="hidden" #selection>
-
-  <div class="card-container">
-    <button class="card card-small" (click)="selection.value = 'bg1'" tabindex="0">
-      <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-      <span>Background 1</span>
-    </button>
-
-    <button class="card card-small" (click)="selection.value = 'bg2'" tabindex="0">
-      <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-      <span>Background 2</span>
-    </button>
-
-    <button class="card card-small" (click)="selection.value = 'bg3'" tabindex="0">
-      <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-      <span>Background 3</span>
-    </button>
-
-    <button class="card card-small" (click)="selection.value = 'bg4'" tabindex="0">
-      <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-      <span>Background 4</span>
-    </button>
-  </div>
-
-  <!-- Terminal -->
-  <div [ngSwitch]="selection.value">
-      <div *ngSwitchDefault class="background" [ngStyle]="{backgroundImage: 'url(https://images.pexels.com/photos/531880/pexels-photo-531880.jpeg)'}"></div>
-      <div *ngSwitchCase="'bg2'" class="background" [ngStyle]="{backgroundImage: 'url(https://www.pixelstalk.net/wp-content/uploads/2016/04/Download-desktop-ocean-backgrounds-wallpapers.jpg)'}"></div>
-      <div *ngSwitchCase="'bg3'" class="background" [ngStyle]="{backgroundImage: 'url(https://www.pixelstalk.net/wp-content/uploads/2016/07/HD-Peaceful-Backgrounds.jpg)'}"></div>
-      <div *ngSwitchCase="'bg4'" class="background" [ngStyle]="{backgroundImage: 'url(https://www.baltana.com/files/wallpapers-5/Nature-Photoshop-Background-Best-Wallpaper-16407.jpeg)'}"></div>
-  </div>
-
-</div>
-
-<div class="example-box" cdkDrag>
-  Drag me around
-</div>
+<!-- Moveable Asset Display -->
+<app-prop></app-prop>
 
 <!-- Do Not Remove -->
 <router-outlet></router-outlet>
