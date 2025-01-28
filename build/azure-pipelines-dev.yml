@@ -33,7 +33,7 @@ steps:
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)/dist/'
-    ArtifactName: 'drop'
+    ArtifactName: 'Web'
     publishLocation: 'Container'
   displayName: 'Publish Web Files'
 
@@ -48,6 +48,6 @@ steps:
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)/src/'
-    ArtifactName: 'drop'
+    ArtifactName: 'API'
     publishLocation: 'Container'
   displayName: 'Publish API files'
