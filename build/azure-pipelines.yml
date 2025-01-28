@@ -8,36 +8,61 @@ trigger:
     include:
       - main
 
-jobs:
+stages:
+- stage: Build
+  jobs:
+    - job: WebApp
+      pool: Default
+      steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '20.x'
+        displayName: 'Install Node.js'
+
+      - script: |
+          npm install -g @angular/cli
+          npm install
+          ng build
+        displayName: 'npm install and build'
+
+      - task: CopyFiles@2
+        inputs:
+          Contents: 'dist/virtual-theatre/**'
+          TargetFolder: '$(Build.ArtifactStagingDirectory)'
+          CleanTargetFolder: true
+          OverWrite: true
+        displayName: 'Copy Web Files'
+
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)/dist/virtual-theatre/'
+          ArtifactName: 'virtual-theatre-web'
+          publishLocation: 'Container'
+        displayName: 'Publish Web Files'
+
+    - job: API
+      pool: Default
+      steps:
+      - task: CopyFiles@2
+        inputs:
+          Contents: 'src/api/**'
+          TargetFolder: '$(Build.ArtifactStagingDirectory)'
+          CleanTargetFolder: true
+          OverWrite: true
+        displayName: 'Copy API Files'
+
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)/src/api/'
+          ArtifactName: 'virtual-theatre-api'
+          publishLocation: 'Container'
+        displayName: 'Publish API Files'
+
+- stage: Deploy
+  jobs:
   - job: WebApp
     pool: Default
     steps:
-    - task: NodeTool@0
-      inputs:
-        versionSpec: '20.x'
-      displayName: 'Install Node.js'
-
-    - script: |
-        npm install -g @angular/cli
-        npm install
-        ng build
-      displayName: 'npm install and build'
-
-    - task: CopyFiles@2
-      inputs:
-        Contents: 'dist/virtual-theatre/**'
-        TargetFolder: '$(Build.ArtifactStagingDirectory)'
-        CleanTargetFolder: true
-        OverWrite: true
-      displayName: 'Copy Web Files'
-
-    - task: PublishBuildArtifacts@1
-      inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)/dist/virtual-theatre/'
-        ArtifactName: 'virtual-theatre-web'
-        publishLocation: 'Container'
-      displayName: 'Publish Web Files'
-
     - task: DownloadBuildArtifacts@1
       inputs:
         buildType: 'current'
@@ -46,7 +71,6 @@ jobs:
         downloadPath: '$(System.ArtifactsDirectory)'
         cleanDestinationFolder: true
       displayName: 'Download Web Artifacts'
-
     - task: AzureWebApp@1
       inputs:
         azureSubscription: 'Azure subscription 1(faa5f0d4-459f-4fa4-9c64-a349dca6bd20)'
@@ -55,25 +79,10 @@ jobs:
         package: '$(System.ArtifactsDirectory)'
         runtimeStack: 'NODE|18-lts'
       displayName: 'Deploy Web Artifacts'
-
+  
   - job: API
     pool: Default
     steps:
-    - task: CopyFiles@2
-      inputs:
-        Contents: 'src/api/**'
-        TargetFolder: '$(Build.ArtifactStagingDirectory)'
-        CleanTargetFolder: true
-        OverWrite: true
-      displayName: 'Copy API Files'
-
-    - task: PublishBuildArtifacts@1
-      inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)/src/api/'
-        ArtifactName: 'virtual-theatre-api'
-        publishLocation: 'Container'
-      displayName: 'Publish API Files'
-
     - task: DownloadBuildArtifacts@1
       inputs:
         buildType: 'current'
