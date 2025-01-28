@@ -9,7 +9,7 @@ trigger:
       - dev
 
 jobs:
-  - job: Angular
+  - job: WebApp
     pool: Default
     steps:
     - task: NodeTool@0
