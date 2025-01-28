@@ -100,5 +100,9 @@ stages:
         WebAppName: 'vtheatre-api'
         packageForLinux: '$(System.ArtifactsDirectory)'
         RuntimeStack: 'PYTHON|3.11'
-        ScriptType: 'File Path'
-        ScriptPath: '~/site/wwwroot/virtual-theatre-api/entrypoint.sh'
+        StartupCommand: 'python3 -m gunicorn api:app'
+        ScriptType: 'Inline Script'
+        InlineScript: |
+          set -e
+          python3 -m pip install --upgrade pip
+          python3 -m pip install -r requirements.txt
