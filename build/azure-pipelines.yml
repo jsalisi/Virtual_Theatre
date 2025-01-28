@@ -71,6 +71,7 @@ stages:
         downloadPath: '$(System.ArtifactsDirectory)'
         cleanDestinationFolder: true
       displayName: 'Download Web Artifacts'
+
     - task: AzureWebApp@1
       inputs:
         azureSubscription: 'Azure subscription 1(faa5f0d4-459f-4fa4-9c64-a349dca6bd20)'
@@ -100,9 +101,4 @@ stages:
         WebAppName: 'vtheatre-api'
         packageForLinux: '$(System.ArtifactsDirectory)'
         RuntimeStack: 'PYTHON|3.11'
-        StartupCommand: 'python3 -m gunicorn api:app'
-        ScriptType: 'Inline Script'
-        InlineScript: |
-          set -e
-          python3 -m pip install --upgrade pip
-          python3 -m pip install -r requirements.txt
+      displayName: 'Deploy API Artifacts'
