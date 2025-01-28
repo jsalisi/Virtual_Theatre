@@ -34,3 +34,16 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)/dist/'
     ArtifactName: 'drop'
     publishLocation: 'Container'
+
+- task: CopyFiles@2
+  inputs:
+    Contents: 'src/api/**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    CleanTargetFolder: true
+    OverWrite: true
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/api/'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
