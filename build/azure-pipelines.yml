@@ -22,7 +22,7 @@ stages:
       - script: |
           npm install -g @angular/cli
           npm install
-          ng build
+          ng build --configuration production
         displayName: 'npm install and build'
 
       - task: CopyFiles@2
@@ -101,4 +101,4 @@ stages:
         packageForLinux: '$(System.ArtifactsDirectory)'
         RuntimeStack: 'PYTHON|3.11'
         ScriptType: 'File Path'
-        ScriptPath: 'entrypoint.sh'
+        ScriptPath: '~/site/wwwroot/virtual-theatre-api/entrypoint.sh'
