@@ -98,7 +98,7 @@ stages:
         azureSubscription: 'Azure subscription 1(faa5f0d4-459f-4fa4-9c64-a349dca6bd20)'
         appType: 'webAppLinux'
         WebAppName: 'vtheatre-api'
-        packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+        packageForLinux: '$(System.ArtifactsDirectory)'
         RuntimeStack: 'PYTHON|3.11'
         ScriptType: 'File Path'
         ScriptPath: 'entrypoint.sh'
