@@ -9,7 +9,7 @@ trigger:
       - dev
 
 jobs:
-  - job: WebApp
+  - job: Build_Web_App
     pool: Default
     steps:
     - task: NodeTool@0
@@ -22,3 +22,51 @@ jobs:
         npm install
         ng build
       displayName: 'npm install and build'
+    
+    - task: CopyFiles@2
+      inputs:
+        Contents: 'dist/virtual-theatre/**'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+        CleanTargetFolder: true
+        OverWrite: true
+      displayName: 'Copy Web Files'
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)/dist/virtual-theatre/'
+        ArtifactName: 'virtual-theatre-web'
+        publishLocation: 'Container'
+      displayName: 'Publish Web Files'
+
+  
+  - job: Build_API
+    pool: Default
+    steps:
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '3.x'
+        addToPath: true
+        architecture: 'x64'
+      displayName: 'Install Python'
+
+    - script: |
+        python -m venv venv
+        source venv/bin/activate
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+      displayName: "Install requirements"
+    
+    - task: CopyFiles@2
+      inputs:
+        Contents: 'src/api/**'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+        CleanTargetFolder: true
+        OverWrite: true
+      displayName: 'Copy API Files'
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)/src/api/'
+        ArtifactName: 'virtual-theatre-api'
+        publishLocation: 'Container'
+      displayName: 'Publish Web Files'
