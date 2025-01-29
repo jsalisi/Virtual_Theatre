@@ -95,12 +95,11 @@ stages:
         cleanDestinationFolder: true
       displayName: 'Download API Artifacts'
 
-    - task: AzureRmWebAppDeployment@4
+    - task: AzureWebApp@1
       inputs:
-        ConnectionType: 'AzureRM'
         azureSubscription: 'Azure subscription 1(faa5f0d4-459f-4fa4-9c64-a349dca6bd20)'
         appType: 'webAppLinux'
-        WebAppName: 'vtheatre-api'
-        packageForLinux: '$(System.ArtifactsDirectory)'
-        RuntimeStack: 'PYTHON|3.11'
+        appName: 'vtheatre-api'
+        package: '$(System.ArtifactsDirectory)'
+        runtimeStack: 'PYTHON|3.11'
       displayName: 'Deploy API Artifacts'
