@@ -71,4 +71,4 @@ jobs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)/src/api/'
         ArtifactName: 'virtual-theatre-api'
         publishLocation: 'Container'
-      displayName: 'Publish Web Files'
+      displayName: 'Publish API Files'
