@@ -59,17 +59,18 @@ stages:
         workingDirectory: 'src/api'
         displayName: "Install requirements"
       
-      - task: CopyFiles@2
+      - task: ArchiveFiles@2
         inputs:
-          Contents: 'src/api/**'
-          TargetFolder: '$(Build.ArtifactStagingDirectory)'
-          CleanTargetFolder: true
-          OverWrite: true
-        displayName: 'Copy API Files'
+          rootFolderOrFile: 'src/api/'
+          includeRootFolder: true
+          archiveType: 'zip'
+          archiveFile: '$(Build.ArtifactStagingDirectory)/api.zip'
+          replaceExistingArchive: true
+        displayName: 'Package API Files'
 
       - task: PublishBuildArtifacts@1
         inputs:
-          PathtoPublish: '$(Build.ArtifactStagingDirectory)/src/api/'
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)/api.zip'
           ArtifactName: 'virtual-theatre-api'
           publishLocation: 'Container'
         displayName: 'Publish API Files'
@@ -124,6 +125,6 @@ stages:
         azureSubscription: 'Azure subscription 1(faa5f0d4-459f-4fa4-9c64-a349dca6bd20)'
         appType: 'webAppLinux'
         appName: 'vtheatre-api'
-        package: '$(System.ArtifactsDirectory)/*.zip'
+        package: '$(System.ArtifactsDirectory)/**/*.zip'
         runtimeStack: 'PYTHON|3.11'
       displayName: 'Deploy API Artifacts'
