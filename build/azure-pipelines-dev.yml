@@ -54,8 +54,8 @@ jobs:
         python3 -m venv venv
         source venv/bin/activate
         python3 -m pip install --upgrade pip
-        python3 -m pip install -r src/api/requirements.txt
-      workingDirectory: '$(Build.Repository.LocalPath)'
+        python3 -m pip install -r requirements.txt
+      workingDirectory: 'src/api'
       displayName: "Install requirements"
     
     - task: CopyFiles@2
