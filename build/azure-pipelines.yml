@@ -68,6 +68,7 @@ stages:
         buildType: 'current'
         downloadType: 'single'
         artifactName: 'virtual-theatre-web'
+        itemPattern: 'virtual-theatre-web/**'
         downloadPath: '$(System.ArtifactsDirectory)'
         cleanDestinationFolder: true
       displayName: 'Download Web Artifacts'
@@ -89,6 +90,7 @@ stages:
         buildType: 'current'
         downloadType: 'single'
         artifactName: 'virtual-theatre-api'
+        itemPattern: 'virtual-theatre-api/**'
         downloadPath: '$(System.ArtifactsDirectory)'
         cleanDestinationFolder: true
       displayName: 'Download API Artifacts'
