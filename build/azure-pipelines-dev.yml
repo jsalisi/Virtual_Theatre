@@ -44,11 +44,11 @@ jobs:
     steps:
     - task: UsePythonVersion@0
       inputs:
-        versionSpec: '3.x'
+        versionSpec: '3.12.3'
         disableDownloadFromRegistry: true
-        addToPath: true
+        addToPath: false
         architecture: 'x64'
-      displayName: 'Install Python'
+      displayName: 'Use Python Version'
 
     - script: |
         python -m venv venv
