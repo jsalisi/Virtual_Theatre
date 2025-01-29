@@ -134,5 +134,5 @@ stages:
         appType: 'webAppLinux'
         appName: 'vtheatre-api'
         package: '$(System.ArtifactsDirectory)/**/*.zip'
-        runtimeStack: 'PYTHON|3.11'
+        runtimeStack: 'PYTHON|3.12'
       displayName: 'Deploy API Artifacts'
