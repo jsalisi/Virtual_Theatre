@@ -60,7 +60,7 @@ jobs:
     
     - task: ArchiveFiles@2
       inputs:
-        rootFolderOrFile: 'src/api'
+        rootFolderOrFile: '$(Build.Repository.LocalPath)/src/api'
         includeRootFolder: true
         archiveType: 'zip'
         archiveFile: '$(Build.ArtifactStagingDirectory)/api.zip'
@@ -73,3 +73,4 @@ jobs:
         ArtifactName: 'virtual-theatre-api'
         publishLocation: 'Container'
       displayName: 'Publish API Files'
+    
