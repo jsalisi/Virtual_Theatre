@@ -124,6 +124,6 @@ stages:
         azureSubscription: 'Azure subscription 1(faa5f0d4-459f-4fa4-9c64-a349dca6bd20)'
         appType: 'webAppLinux'
         appName: 'vtheatre-api'
-        package: '$(System.ArtifactsDirectory)'
+        package: '$(System.ArtifactsDirectory)/*.zip'
         runtimeStack: 'PYTHON|3.11'
       displayName: 'Deploy API Artifacts'
