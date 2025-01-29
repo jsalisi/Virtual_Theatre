@@ -30,14 +30,22 @@ jobs:
         CleanTargetFolder: true
         OverWrite: true
       displayName: 'Copy Web Files'
-
+    
+    - task: ArchiveFiles@2
+      inputs:
+        rootFolderOrFile: '$(Build.ArtifactStagingDirectory)'
+        includeRootFolder: true
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/web.zip'
+        replaceExistingArchive: true
+      displayName: 'Package Web Files'
+    
     - task: PublishBuildArtifacts@1
       inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)/dist/virtual-theatre/'
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)**/*.zip'
         ArtifactName: 'virtual-theatre-web'
         publishLocation: 'Container'
       displayName: 'Publish Web Files'
-
   
   - job: Build_API
     pool: Default
@@ -58,9 +66,17 @@ jobs:
       workingDirectory: 'src/api'
       displayName: "Install requirements"
     
+    - task: CopyFiles@2
+      inputs:
+        Contents: 'src/api/**'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+        CleanTargetFolder: true
+        OverWrite: true
+      displayName: 'Copy API Files'
+    
     - task: ArchiveFiles@2
       inputs:
-        rootFolderOrFile: '$(Build.Repository.LocalPath)/src/api'
+        rootFolderOrFile: '$(Build.ArtifactStagingDirectory)'
         includeRootFolder: true
         archiveType: 'zip'
         archiveFile: '$(Build.ArtifactStagingDirectory)/api.zip'
@@ -69,7 +85,7 @@ jobs:
 
     - task: PublishBuildArtifacts@1
       inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)/api.zip'
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)/**/*.zip'
         ArtifactName: 'virtual-theatre-api'
         publishLocation: 'Container'
       displayName: 'Publish API Files'
