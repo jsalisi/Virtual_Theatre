@@ -59,9 +59,17 @@ stages:
         workingDirectory: 'src/api'
         displayName: "Install requirements"
       
+      - task: CopyFiles@2
+        inputs:
+          Contents: 'src/api/**'
+          TargetFolder: '$(Build.ArtifactStagingDirectory)'
+          CleanTargetFolder: true
+          OverWrite: true
+        displayName: 'Copy API Files'
+      
       - task: ArchiveFiles@2
         inputs:
-          rootFolderOrFile: 'src/api/'
+          rootFolderOrFile: '$(Build.ArtifactStagingDirectory)'
           includeRootFolder: true
           archiveType: 'zip'
           archiveFile: '$(Build.ArtifactStagingDirectory)/api.zip'
