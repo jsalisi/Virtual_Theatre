@@ -60,7 +60,7 @@ jobs:
     
     - task: ArchiveFiles@2
       inputs:
-        rootFolderOrFile: 'src/api/'
+        rootFolderOrFile: 'src/api'
         includeRootFolder: true
         archiveType: 'zip'
         archiveFile: '$(Build.ArtifactStagingDirectory)/api.zip'
