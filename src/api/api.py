@@ -1,6 +1,8 @@
 from typing import Annotated
-from fastapi import FastAPI, Form, UploadFile, HTTPException
+from fastapi import FastAPI, Form, UploadFile, HTTPException, Request, status
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.templating import Jinja2Templates
+from fastapi.responses import HTMLResponse
 from azure.storage.blob.aio import BlobServiceClient
 
 import aiohttp
@@ -10,12 +12,9 @@ from dotenv import load_dotenv, dotenv_values
 load_dotenv()
 
 app = FastAPI()
+templates = Jinja2Templates(directory="templates")
 
-origins = [
-    "http://localhost",
-    "http://localhost:4200",
-    "http://localhost:8000"
-]
+origins = ["*"]
 
 app.add_middleware(
     CORSMiddleware,
@@ -25,8 +24,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/")
+async def index(request: Request):
+    print('Request for index page received')
+    return templates.TemplateResponse('index.html', {"request": request})
+
 @app.get("/hello")
-async def root():
+async def get_hello():
     return {"message": "Hello World"}
 
 @app.post("/api/upload/")
@@ -50,3 +54,6 @@ async def uploadtoazure(file: UploadFile,file_name: str,file_type:str):
                 return HTTPException(401, "Something went terribly wrong..")
     
     return ("{url}/{filename}".format(url=os.getenv("BASE_IMAGE_URL"), filename=file_name))
+
+if __name__ == '__main__':
+    uvicorn.run('api:app', host='0.0.0.0', port=8000)

@@ -1,1 +1,1 @@
-python3 -m uvicorn api:app -b 0.0.0.0
+python -m uvicorn api:app --host 0.0.0.0
