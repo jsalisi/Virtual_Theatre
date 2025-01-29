@@ -24,15 +24,18 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Default Route
 @app.get("/")
 async def index(request: Request):
     print('Request for index page received')
     return templates.TemplateResponse('index.html', {"request": request})
 
+# Test Route
 @app.get("/hello")
 async def get_hello():
     return {"message": "Hello World"}
 
+# Upload Route
 @app.post("/api/upload/")
 async def create_upload_file(file: UploadFile):
     name = file.filename
