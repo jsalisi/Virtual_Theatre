@@ -45,6 +45,7 @@ jobs:
     - task: UsePythonVersion@0
       inputs:
         versionSpec: '3.x'
+        disableDownloadFromRegistry: true
         addToPath: true
         architecture: 'x64'
       displayName: 'Install Python'
