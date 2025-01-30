@@ -3,7 +3,11 @@
   class="background-container"
   [ngStyle]="{'background-image': 'url('+ backgroundUrl +')'}"
 >
-  <!-- Upload Interface -->
-  <input #file class="file-input" type="file" accept="image/*" (change)="uploadBackgroundImage($event)">
-  <button #upload (click)="file.click()">Upload file</button>
+  <mat-toolbar class="toolbar">
+    <h1> Virtual Theatre </h1>
+    <!-- Upload Interface -->
+    <input #file class="file-input" type="file" accept="image/*" (change)="uploadBackgroundImage($event)">
+    <button #upload (click)="file.click()">Upload file</button>
+  </mat-toolbar>
+
 </div>
