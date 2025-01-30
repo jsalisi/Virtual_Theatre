@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
@@ -16,17 +16,15 @@ export class ToolbarComponent {
 
   constructor(private dataService: DataService) {}
 
-  uploadBackgroundImage(event: any) {
+  uploadBackgroundImage(event: any): void {
     this.dataService.uploadFileData(event).subscribe((res) => {
       this.backgroundUrl = res;
       this.dataService.setData(this.backgroundUrl);
     });
   }
 
-  uploadObjectImage(event: any) {
-    this.dataService.uploadFileData(event).subscribe((res) => {
-      this.backgroundUrl = res;
-      this.dataService.setData(this.backgroundUrl);
-    });
+  @Output() onButtonPress = new EventEmitter<boolean>();
+  createNewObject(pressed: boolean): void {
+    this.onButtonPress.emit(pressed);
   }
 }

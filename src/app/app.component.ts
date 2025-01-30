@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject, ViewContainerRef } from '@angular/core';
+import { ObjectComponent } from './object/object.component';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Virtual_Theatre';
+
+  viewContainer = inject(ViewContainerRef);
+
+  createObjectComponent(pressed: boolean): void {
+    if (pressed) {
+      this.viewContainer.createComponent(ObjectComponent);
+    } else {
+      console.log('No object created');      
+    }
+  }
 }

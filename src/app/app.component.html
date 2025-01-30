@@ -1,8 +1,11 @@
 <!-- Dynamic Background -->
 <app-background></app-background>
 
+<!-- Object Container -->
+<div id="objectContainer"></div>
+
 <!-- Toolbar -->
-<app-toolbar></app-toolbar>
+<app-toolbar (onButtonPress)="createObjectComponent(true)"></app-toolbar>
 
 <!-- Do Not Remove -->
 <router-outlet></router-outlet>
