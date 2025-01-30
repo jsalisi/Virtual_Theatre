@@ -3,8 +3,9 @@
   class="background-container"
   [ngStyle]="{'background-image': 'url('+ backgroundUrl +')'}"
 >
-  <mat-toolbar class="toolbar">
-    <h1> Virtual Theatre </h1>
+  <mat-toolbar class="mat-elevation-z5" color="primary">
+    <span> Virtual Theatre </span>
+    <span class="filler"></span>
     <!-- Upload Interface -->
     <input #file class="file-input" type="file" accept="image/*" (change)="uploadBackgroundImage($event)">
     <button #upload (click)="file.click()">Upload file</button>
