@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @Component({
-  selector: 'app-prop',
+  selector: 'app-object',
   standalone: true,
   imports: [DragDropModule],
-  templateUrl: './prop.component.html',
-  styleUrl: './prop.component.css',
+  templateUrl: './object.component.html',
+  styleUrl: './object.component.css',
 })
-export class PropComponent {}
+export class ObjectComponent {}

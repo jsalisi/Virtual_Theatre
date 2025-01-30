@@ -10,32 +10,3 @@
   background-size: cover;
   background-position: center;
 }
-
-.mat-toolbar {
-  position: relative;
-}
-
-.filler {
-  flex: 1 1 auto;
-}
-
-button {
-  margin-left: 10px;
-  margin-right: 10px;
-  padding: 10px 20px;
-  font-size: 1rem;
-  background-color: rgba(10, 163, 202, 0.5);
-  color: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3 ease;
-}
-
-button:hover {
-  background-color: rgba(0, 0, 0, 0.7);
-}
-
-.file-input {
-  display: none;
-}
