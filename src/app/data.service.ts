@@ -15,6 +15,6 @@ export class DataService {
 
     const fd = new FormData();
     fd.append('file', this.imageFile);
-    return (this.httpClient.post(this.baseUrl + '/api/upload', fd))
+    return this.httpClient.post(`${this.baseUrl}/api/upload`, fd);
   }
 }
