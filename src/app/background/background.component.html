@@ -6,9 +6,16 @@
   <mat-toolbar class="mat-elevation-z5" color="primary">
     <span> Virtual Theatre </span>
     <span class="filler"></span>
+
     <!-- Upload Interface -->
+
+     <!-- Background Button -->
     <input #file class="file-input" type="file" accept="image/*" (change)="uploadBackgroundImage($event)">
-    <button #upload (click)="file.click()">Upload file</button>
+    <button #upload (click)="file.click()">New Scene</button>
+
+    <!-- Prop Button -->
+    <input #file class="file-input" type="file" accept="image/*" (change)="uploadPropImage($event)">
+    <button #upload (click)="file.click()">New Prop</button>
   </mat-toolbar>
 
 </div>

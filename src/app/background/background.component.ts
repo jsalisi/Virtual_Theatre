@@ -21,4 +21,10 @@ export class BackgroundComponent {
       this.backgroundUrl = res;
     });
   }
+
+  uploadPropImage(event: any) {
+    this.dataService.uploadFileData(event).subscribe((res) => {
+      this.backgroundUrl = res;
+    });
+  }
 }
