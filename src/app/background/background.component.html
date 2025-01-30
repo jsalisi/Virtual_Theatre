@@ -11,11 +11,11 @@
 
      <!-- Background Button -->
     <input #file class="file-input" type="file" accept="image/*" (change)="uploadBackgroundImage($event)">
-    <button #upload (click)="file.click()">New Scene</button>
+    <button #upload (click)="file.click()" class="mat-elevation-z3">New Scene</button>
 
     <!-- Prop Button -->
     <input #file class="file-input" type="file" accept="image/*" (change)="uploadPropImage($event)">
-    <button #upload (click)="file.click()">New Prop</button>
+    <button #upload (click)="file.click()" class="mat-elevation-z3">New Prop</button>
   </mat-toolbar>
 
 </div>
