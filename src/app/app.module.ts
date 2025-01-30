@@ -6,7 +6,7 @@ import { provideHttpClient } from '@angular/common/http';
 
 // Custom Components
 import { BackgroundComponent } from './background/background.component';
-import { PropComponent } from './prop/prop.component';
+import { ObjectComponent } from './object/object.component';
 
 @NgModule({
   declarations: [AppComponent],
@@ -14,8 +14,8 @@ import { PropComponent } from './prop/prop.component';
     BrowserModule,
     AppRoutingModule,
     BackgroundComponent,
-    PropComponent
-  ],
+    ObjectComponent
+],
   providers: [provideHttpClient()],
   bootstrap: [AppComponent],
 })
