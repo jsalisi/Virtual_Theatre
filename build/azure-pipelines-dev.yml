@@ -63,6 +63,6 @@ jobs:
       inputs:
         containerRegistry: 'Azure Container Registry'
         repository: 'vtheatre'
-        command: 'build'
+        command: 'buildAndPush'
         Dockerfile: 'api/Dockerfile'
         buildContext: 'api'
