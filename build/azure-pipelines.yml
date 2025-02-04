@@ -109,7 +109,7 @@ stages:
     - task: Docker@2
       inputs:
         containerRegistry: 'Azure Container Registry'
-        repository: 'vtheatre-main'
+        repository: 'vtheatre-api-main'
         command: 'buildAndPush'
         Dockerfile: 'api/Dockerfile'
         buildContext: 'api'
@@ -118,4 +118,4 @@ stages:
       inputs:
         containerRegistry: 'Azure Container Registry'
         command: 'start'
-        container: 'vtheatre-api'
+        container: 'vtheatre-api-main'
