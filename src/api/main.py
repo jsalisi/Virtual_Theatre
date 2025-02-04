@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from azure.storage.blob.aio import BlobServiceClient
+import uvicorn
 
 import aiohttp
 import os
@@ -57,4 +58,4 @@ async def uploadtoazure(file: UploadFile,file_name: str,file_type:str):
     return ("{url}/{filename}".format(url=os.getenv("BASE_IMAGE_URL"), filename=file_name))
 
 if __name__ == '__main__':
-    uvicorn.run('api:app', host='0.0.0.0', port=8000)
+    uvicorn.run('main:app', host='0.0.0.0', port=8000)
