@@ -48,7 +48,7 @@ jobs:
     - task: Docker@2
       inputs:
         containerRegistry: 'Azure Container Registry'
-        repository: 'vtheatre'
+        repository: 'vtheatre-api-dev'
         command: 'buildAndPush'
         Dockerfile: 'api/Dockerfile'
         buildContext: 'api'

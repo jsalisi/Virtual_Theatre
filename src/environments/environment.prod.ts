@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseUrl: 'https://vtheatre-api-bjfkdxc3gffce0af.canadacentral-01.azurewebsites.net'
+  baseUrl: 'http://vtheatre-api.bjfkdxc3gffce0af.canadacentral.azurecontainer.io:3100'
 };
