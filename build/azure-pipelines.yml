@@ -102,29 +102,20 @@ stages:
   - job: API
     pool: Default
     steps:
-    - task: UsePythonVersion@0
+    - task: DockerInstaller@0
       inputs:
-        versionSpec: '3.13'
-        disableDownloadFromRegistry: true
-        addToPath: false
-        architecture: 'x64'
-      displayName: 'Use Python Version'
-      
-    - task: DownloadBuildArtifacts@1
+        dockerVersion: '17.09.0-ce'
+    
+    - task: Docker@2
       inputs:
-        buildType: 'current'
-        downloadType: 'single'
-        artifactName: 'virtual-theatre-api'
-        itemPattern: 'virtual-theatre-api/**'
-        downloadPath: '$(System.ArtifactsDirectory)'
-        cleanDestinationFolder: true
-      displayName: 'Download API Artifacts'
-
-    - task: AzureWebApp@1
+        containerRegistry: 'Azure Container Registry'
+        repository: 'vtheatre-main'
+        command: 'buildAndPush'
+        Dockerfile: 'api/Dockerfile'
+        buildContext: 'api'
+    
+    - task: Docker@2
       inputs:
-        azureSubscription: 'Azure subscription 1(faa5f0d4-459f-4fa4-9c64-a349dca6bd20)'
-        appType: 'webAppLinux'
-        appName: 'vtheatre-api'
-        package: '$(System.ArtifactsDirectory)/**/*.zip'
-        runtimeStack: 'PYTHON|3.12'
-      displayName: 'Deploy API Artifacts'
+        containerRegistry: 'Azure Container Registry'
+        command: 'start'
+        container: 'vtheatre-api'
