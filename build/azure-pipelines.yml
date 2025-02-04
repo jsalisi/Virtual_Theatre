@@ -93,5 +93,5 @@ stages:
       inputs:
         containerRegistry: 'Azure Container Registry'
         command: 'start'
-        container: 'vtheatre'
+        container: 'vtheatre-api'
       displayName: 'Deploy API container'
