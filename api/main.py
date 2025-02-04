@@ -4,10 +4,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from azure.storage.blob.aio import BlobServiceClient
-import uvicorn
 
-import aiohttp
 import os
+import uvicorn
+import aiohttp
 from dotenv import load_dotenv, dotenv_values
 
 load_dotenv()
@@ -17,7 +17,7 @@ templates = Jinja2Templates(directory="templates")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[os.getenv("FRONTEND_URL")],
+    allow_origins=[os.environ.get("FRONTEND_URL")],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
