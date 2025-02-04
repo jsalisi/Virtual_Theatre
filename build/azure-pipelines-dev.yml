@@ -64,4 +64,5 @@ jobs:
         containerRegistry: 'Azure Container Registry'
         repository: 'vtheatre'
         command: 'build'
-        Dockerfile: '**/Dockerfile'
+        Dockerfile: '$(Pipeline.Workspace)/api/Dockerfile'
+        buildContext: '$(Pipeline.Workspace)/api'
