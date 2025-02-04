@@ -44,20 +44,6 @@ jobs:
     - task: DockerInstaller@0
       inputs:
         dockerVersion: '17.09.0-ce'
-    
-    - task: DownloadSecureFile@1
-      name: envfile
-      inputs:
-        secureFile: '.env'
-      displayName: 'Download .env file'
-    
-    - task: CopyFiles@2
-      inputs:
-        SourceFolder: '$(envfile.secureFilePath)'
-        Contents: '.env'
-        TargetFolder: 'api'
-        OverWrite: true
-      displayName: 'Copy .env file to api folder'
 
     - task: Docker@2
       inputs:

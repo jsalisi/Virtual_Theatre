@@ -42,7 +42,7 @@ async def create_upload_file(file: UploadFile):
     return await uploadtoazure(file,name,type)
 
 async def uploadtoazure(file: UploadFile,file_name: str,file_type:str):
-    connect_str = os.getenv("CONNECTION_STRING")
+    connect_str = os.environ.get("CONNECTION_STRING")
     blob_service_client = BlobServiceClient.from_connection_string(connect_str)
     container_name = "vtheatre-image-storage"
     async with blob_service_client:
@@ -55,7 +55,7 @@ async def uploadtoazure(file: UploadFile,file_name: str,file_type:str):
                 print(e)
                 return HTTPException(401, "Something went terribly wrong..")
     
-    return ("{url}/{filename}".format(url=os.getenv("BASE_IMAGE_URL"), filename=file_name))
+    return ("{url}/{filename}".format(url=os.environ.get("BASE_IMAGE_URL"), filename=file_name))
 
 if __name__ == '__main__':
     uvicorn.run('main:app', host='0.0.0.0', port=3100)
