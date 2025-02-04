@@ -55,7 +55,7 @@ jobs:
       inputs:
         SourceFolder: '$(envfile.secureFilePath)'
         Contents: '.env'
-        TargetFolder: '$(Pipeline.Workspace)/api'
+        TargetFolder: 'api'
         OverWrite: true
       displayName: 'Copy .env file to api folder'
 
@@ -64,5 +64,5 @@ jobs:
         containerRegistry: 'Azure Container Registry'
         repository: 'vtheatre'
         command: 'build'
-        Dockerfile: '$(Pipeline.Workspace)/api/Dockerfile'
-        buildContext: '$(Pipeline.Workspace)/api'
+        Dockerfile: 'api/Dockerfile'
+        buildContext: 'api'
