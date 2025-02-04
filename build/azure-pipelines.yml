@@ -43,37 +43,19 @@ stages:
     - job: API
       pool: Default
       steps:
-      - task: UsePythonVersion@0
+      - task: DockerInstaller@0
         inputs:
-          versionSpec: '3.13'
-          disableDownloadFromRegistry: true
-          addToPath: false
-          architecture: 'x64'
-        displayName: 'Use Python Version'
+          dockerVersion: '17.09.0-ce'
+        displayName: 'Install Docker'
       
-      - task: CopyFiles@2
+      - task: Docker@2
         inputs:
-          Contents: 'src/api/**'
-          TargetFolder: '$(Build.ArtifactStagingDirectory)'
-          CleanTargetFolder: true
-          OverWrite: true
-        displayName: 'Copy API Files'
-      
-      - task: ArchiveFiles@2
-        inputs:
-          rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/src/api/'
-          includeRootFolder: false
-          archiveType: 'zip'
-          archiveFile: '$(Build.ArtifactStagingDirectory)/api.zip'
-          replaceExistingArchive: true
-        displayName: 'Package API Files'
-
-      - task: PublishBuildArtifacts@1
-        inputs:
-          PathtoPublish: '$(Build.ArtifactStagingDirectory)/api.zip'
-          ArtifactName: 'virtual-theatre-api'
-          publishLocation: 'Container'
-        displayName: 'Publish API Files'
+          containerRegistry: 'Azure Container Registry'
+          repository: 'vtheatre-api-main'
+          command: 'buildAndPush'
+          Dockerfile: 'api/Dockerfile'
+          buildContext: 'api'
+        displayName: 'Build and Publish API container'
 
 - stage: Deploy
   jobs:
@@ -105,17 +87,11 @@ stages:
     - task: DockerInstaller@0
       inputs:
         dockerVersion: '17.09.0-ce'
-    
-    - task: Docker@2
-      inputs:
-        containerRegistry: 'Azure Container Registry'
-        repository: 'vtheatre-api-main'
-        command: 'buildAndPush'
-        Dockerfile: 'api/Dockerfile'
-        buildContext: 'api'
+      displayName: 'Install Docker'
     
     - task: Docker@2
       inputs:
         containerRegistry: 'Azure Container Registry'
         command: 'start'
         container: 'vtheatre-api-main'
+      displayName: 'Deploy API container'
