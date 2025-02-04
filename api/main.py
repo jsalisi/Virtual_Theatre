@@ -5,8 +5,9 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from azure.storage.blob.aio import BlobServiceClient
 
-import aiohttp
 import os
+import uvicorn
+import aiohttp
 from dotenv import load_dotenv, dotenv_values
 
 load_dotenv()
@@ -16,7 +17,7 @@ templates = Jinja2Templates(directory="templates")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[os.getenv("FRONTEND_URL")],
+    allow_origins=[os.environ.get("FRONTEND_URL")],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -41,7 +42,7 @@ async def create_upload_file(file: UploadFile):
     return await uploadtoazure(file,name,type)
 
 async def uploadtoazure(file: UploadFile,file_name: str,file_type:str):
-    connect_str = os.getenv("CONNECTION_STRING")
+    connect_str = os.environ.get("CONNECTION_STRING")
     blob_service_client = BlobServiceClient.from_connection_string(connect_str)
     container_name = "vtheatre-image-storage"
     async with blob_service_client:
@@ -54,7 +55,7 @@ async def uploadtoazure(file: UploadFile,file_name: str,file_type:str):
                 print(e)
                 return HTTPException(401, "Something went terribly wrong..")
     
-    return ("{url}/{filename}".format(url=os.getenv("BASE_IMAGE_URL"), filename=file_name))
+    return ("{url}/{filename}".format(url=os.environ.get("BASE_IMAGE_URL"), filename=file_name))
 
 if __name__ == '__main__':
-    uvicorn.run('api:app', host='0.0.0.0', port=8000)
+    uvicorn.run('main:app', host='0.0.0.0', port=3100)
