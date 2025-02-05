@@ -88,4 +88,4 @@ stages:
       inputs:
         azureSubscription: 'Azure subscription 1(faa5f0d4-459f-4fa4-9c64-a349dca6bd20)'
         appName: 'vtheatre-api'
-        containers: 'vtheatre.azurecr.io/vtheatre:latest'
+        containers: 'vtheatre.azurecr.io/vtheatre-api-main:latest'
