@@ -83,15 +83,9 @@ stages:
   
   - job: API
     pool: Default
-    steps:
-    - task: DockerInstaller@0
+    steps:    
+    - task: AzureWebAppContainer@1
       inputs:
-        dockerVersion: '17.09.0-ce'
-      displayName: 'Install Docker'
-    
-    - task: Docker@2
-      inputs:
-        containerRegistry: 'Azure Container Registry'
-        command: 'start'
-        container: 'vtheatre-api'
-      displayName: 'Deploy API container'
+        azureSubscription: 'Azure subscription 1(faa5f0d4-459f-4fa4-9c64-a349dca6bd20)'
+        appName: 'vtheatre-api'
+        containers: 'vtheatre.azurecr.io/vtheatre:latest'
