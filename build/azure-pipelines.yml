@@ -83,9 +83,13 @@ stages:
   
   - job: API
     pool: Default
-    steps:    
-    - task: AzureWebAppContainer@1
+    steps:
+    - task: AzureRmWebAppDeployment@4
       inputs:
+        ConnectionType: 'AzureRM'
         azureSubscription: 'Azure subscription 1(faa5f0d4-459f-4fa4-9c64-a349dca6bd20)'
-        appName: 'vtheatre-api'
-        containers: 'vtheatre.azurecr.io/vtheatre-api-main:latest'
+        appType: 'webAppContainer'
+        WebAppName: 'vtheatre-api'
+        DockerNamespace: 'vtheatre.azurecr.io'
+        DockerRepository: 'vtheatre-api-main'
+        DockerImageTag: 'latest'
