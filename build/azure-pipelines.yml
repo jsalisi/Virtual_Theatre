@@ -92,3 +92,4 @@ stages:
         WebAppName: 'vtheatre-api'
         DockerNamespace: 'vtheatre.azurecr.io'
         DockerRepository: 'vtheatre-api-main'
+        DockerImageTag: '$(Build.BuildId)'
