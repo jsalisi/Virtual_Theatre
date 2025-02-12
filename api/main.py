@@ -37,7 +37,7 @@ async def get_api_auth(api_key: str = Security(get_api_key)):
     return {"API Key": api_key}
 
 # Upload Route
-@app.post("/api/upload/")
+@app.post("/api/upload")
 async def create_upload_file(file: UploadFile, api_key: str = Security(get_api_key)):
     name = file.filename
     type = file.content_type
