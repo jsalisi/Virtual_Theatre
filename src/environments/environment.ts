@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://localhost:3100'
+  baseUrl: 'http://localhost:3100',
+  key: 'vtheatre-api-rod2Nc8EbPMjd9Ba5x3k9C9ykc8Ouy3xLFDQ3cCJCha4afj5VCO',
 };
 
 /*

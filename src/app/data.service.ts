@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 export class DataService {
   imageFile: File | any = null;
   private baseUrl = environment.baseUrl;
+  private apiKey = environment.key;
   private imageUrl = signal('');
 
   constructor(private httpClient: HttpClient) {}
@@ -25,6 +26,9 @@ export class DataService {
 
     const fd = new FormData();
     fd.append('file', this.imageFile);
-    return this.httpClient.post(`${this.baseUrl}/api/upload`, fd);
+    return this.httpClient.post(
+      `${this.baseUrl}/api/upload?api-key=${this.apiKey}`,
+      fd
+    );
   }
 }
