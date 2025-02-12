@@ -1,14 +1,16 @@
+import os
+import uvicorn
+import aiohttp
+
+from dotenv import load_dotenv, dotenv_values
 from typing import Annotated
-from fastapi import FastAPI, Form, UploadFile, HTTPException, Request, status
+from fastapi import FastAPI,  Request, status, Form, UploadFile, HTTPException, Security
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from azure.storage.blob.aio import BlobServiceClient
 
-import os
-import uvicorn
-import aiohttp
-from dotenv import load_dotenv, dotenv_values
+from model.api_auth import get_api_key
 
 load_dotenv()
 
@@ -30,13 +32,13 @@ async def index(request: Request):
     return templates.TemplateResponse('index.html', {"request": request})
 
 # Test Route
-@app.get("/hello")
-async def get_hello():
-    return {"message": "Hello World"}
+@app.get("/api")
+async def get_api_auth(api_key: str = Security(get_api_key)):
+    return {"API Key": api_key}
 
 # Upload Route
 @app.post("/api/upload/")
-async def create_upload_file(file: UploadFile):
+async def create_upload_file(file: UploadFile, api_key: str = Security(get_api_key)):
     name = file.filename
     type = file.content_type
     return await uploadtoazure(file,name,type)
