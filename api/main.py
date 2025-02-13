@@ -1,13 +1,10 @@
 import os
 import uvicorn
-import aiohttp
 
-from dotenv import load_dotenv, dotenv_values
-from typing import Annotated
-from fastapi import FastAPI,  Request, status, Form, UploadFile, HTTPException, Security
+from dotenv import load_dotenv
+from fastapi import FastAPI,  Request, UploadFile, Security
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse
 
 from model.api_auth import get_api_key
 from model.api_auth import upload_to_azure
@@ -19,7 +16,7 @@ templates = Jinja2Templates(directory="templates")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[os.environ.get("FRONTEND_URL")],
+    allow_origins=[os.getenv("FRONTEND_URL")],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -41,7 +38,7 @@ async def get_api_auth(api_key: str = Security(get_api_key)):
 async def create_upload_file(file: UploadFile, api_key: str = Security(get_api_key)):
     name = file.filename
     type = file.content_type
-    is_prod = eval(os.environ.get("IS_PROD"))
+    is_prod = eval(os.getenv("IS_PROD"))
     return await upload_to_azure(file, name, type, is_prod)
 
 if __name__ == '__main__':

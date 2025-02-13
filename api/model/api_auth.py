@@ -1,15 +1,15 @@
-import os, json
+import os
 
 from fastapi import HTTPException, status, Security, UploadFile
 from fastapi.security import APIKeyHeader, APIKeyQuery
 from azure.identity import DefaultAzureCredential
 from azure.storage.blob.aio import BlobServiceClient
 
-from dotenv import load_dotenv, dotenv_values
+from dotenv import load_dotenv
 
 load_dotenv()
 
-API_KEYS = os.environ.get("API_KEY").split(',')
+API_KEYS = os.getenv("API_KEY").split(',')
 
 api_key_query = APIKeyQuery(name="api-key", auto_error=False)
 api_key_header = APIKeyHeader(name="x-api-key", auto_error=False)
@@ -28,16 +28,15 @@ def get_api_key(
     )
 
 async def upload_to_azure(file: UploadFile, file_name: str, file_type: str, is_prod: bool):
-    
-    blob_service_client = BlobServiceClient.from_connection_string(os.environ.get("CONNECTION_STRING"))
-    
     if is_prod:
         token_credential = DefaultAzureCredential()
         blob_service_client = BlobServiceClient(
-            account_url = os.environ.get("BASE_IMAGE_URL"),
+            account_url = os.getenv("AZURE_STORAGEBLOB_RESOURCEENDPOINT"),
             credential = token_credential)
+    else:
+        blob_service_client = BlobServiceClient.from_connection_string(os.getenv("CONNECTION_STRING"))
     
-    container_name = "vtheatre-image-storage"
+    container_name = os.getenv("CONTAINER_NAME")
     async with blob_service_client:
             container_client = blob_service_client.get_container_client(container_name)
             try:
@@ -48,4 +47,4 @@ async def upload_to_azure(file: UploadFile, file_name: str, file_type: str, is_p
                 print(e)
                 return HTTPException(401, "Something went terribly wrong..")
     
-    return (f"{os.environ.get('BASE_IMAGE_URL')}/{container_name}/{file_name}")
+    return (os.getenv("AZURE_STORAGEBLOB_RESOURCEENDPOINT") + f"{container_name}/{file_name}")
