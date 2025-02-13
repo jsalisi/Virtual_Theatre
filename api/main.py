@@ -34,14 +34,15 @@ async def index(request: Request):
 # Test Route
 @app.get("/api")
 async def get_api_auth(api_key: str = Security(get_api_key)):
-    return (f"Api Key: ${api_key}")
+    return ("Api Key Check: Success")
 
 # Upload Route
 @app.post("/api/upload")
 async def create_upload_file(file: UploadFile, api_key: str = Security(get_api_key)):
     name = file.filename
     type = file.content_type
-    return await upload_to_azure(file,name,type)
+    is_prod = eval(os.environ.get("IS_PROD"))
+    return await upload_to_azure(file, name, type, is_prod)
 
 if __name__ == '__main__':
     uvicorn.run('main:app', host='0.0.0.0', port=3100, reload=True)
