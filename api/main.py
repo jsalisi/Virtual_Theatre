@@ -8,9 +8,9 @@ from fastapi import FastAPI,  Request, status, Form, UploadFile, HTTPException, 
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
-from azure.storage.blob.aio import BlobServiceClient
 
 from model.api_auth import get_api_key
+from model.api_auth import upload_to_azure
 
 load_dotenv()
 
@@ -34,30 +34,14 @@ async def index(request: Request):
 # Test Route
 @app.get("/api")
 async def get_api_auth(api_key: str = Security(get_api_key)):
-    return {"API Key": api_key}
+    return (f"Api Key: ${api_key}")
 
 # Upload Route
 @app.post("/api/upload")
 async def create_upload_file(file: UploadFile, api_key: str = Security(get_api_key)):
     name = file.filename
     type = file.content_type
-    return await uploadtoazure(file,name,type)
-
-async def uploadtoazure(file: UploadFile,file_name: str,file_type:str):
-    connect_str = os.environ.get("CONNECTION_STRING")
-    blob_service_client = BlobServiceClient.from_connection_string(connect_str)
-    container_name = "vtheatre-image-storage"
-    async with blob_service_client:
-            container_client = blob_service_client.get_container_client(container_name)
-            try:
-                blob_client = container_client.get_blob_client(file_name)
-                f = await file.read()
-                await blob_client.upload_blob(f, overwrite=True)
-            except Exception as e:
-                print(e)
-                return HTTPException(401, "Something went terribly wrong..")
-    
-    return ("{url}/{filename}".format(url=os.environ.get("BASE_IMAGE_URL"), filename=file_name))
+    return await upload_to_azure(file,name,type)
 
 if __name__ == '__main__':
-    uvicorn.run('main:app', host='0.0.0.0', port=3100)
+    uvicorn.run('main:app', host='0.0.0.0', port=3100, reload=True)
