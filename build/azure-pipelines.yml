@@ -7,89 +7,93 @@ trigger:
   branches:
     include:
       - main
+  paths:
+    include:
+      - api/*
+      - src/app/*
 
 stages:
-- stage: Build
-  jobs:
-    - job: WebApp
-      pool: Default
-      steps:
-      - task: NodeTool@0
-        inputs:
-          versionSpec: '20.x'
-        displayName: 'Install Node.js'
+  - stage: Build
+    jobs:
+      - job: WebApp
+        pool: Default
+        steps:
+          - task: NodeTool@0
+            inputs:
+              versionSpec: "20.x"
+            displayName: "Install Node.js"
 
-      - script: |
-          npm install -g @angular/cli
-          npm install
-          ng build --configuration production
-        displayName: 'npm install and build'
+          - script: |
+              npm install -g @angular/cli
+              npm install
+              ng build --configuration production
+            displayName: "npm install and build"
 
-      - task: CopyFiles@2
-        inputs:
-          Contents: 'dist/virtual-theatre/**'
-          TargetFolder: '$(Build.ArtifactStagingDirectory)'
-          CleanTargetFolder: true
-          OverWrite: true
-        displayName: 'Copy Web Files'
+          - task: CopyFiles@2
+            inputs:
+              Contents: "dist/virtual-theatre/**"
+              TargetFolder: "$(Build.ArtifactStagingDirectory)"
+              CleanTargetFolder: true
+              OverWrite: true
+            displayName: "Copy Web Files"
 
-      - task: PublishBuildArtifacts@1
-        inputs:
-          PathtoPublish: '$(Build.ArtifactStagingDirectory)/dist/virtual-theatre/'
-          ArtifactName: 'virtual-theatre-web'
-          publishLocation: 'Container'
-        displayName: 'Publish Web Files'
+          - task: PublishBuildArtifacts@1
+            inputs:
+              PathtoPublish: "$(Build.ArtifactStagingDirectory)/dist/virtual-theatre/"
+              ArtifactName: "virtual-theatre-web"
+              publishLocation: "Container"
+            displayName: "Publish Web Files"
 
-    - job: API
-      pool: Default
-      steps:
-      - task: DockerInstaller@0
-        inputs:
-          dockerVersion: '17.09.0-ce'
-        displayName: 'Install Docker'
-      
-      - task: Docker@2
-        inputs:
-          containerRegistry: 'Azure Container Registry'
-          repository: 'vtheatre-api-main'
-          command: 'buildAndPush'
-          Dockerfile: 'api/Dockerfile'
-          buildContext: 'api'
-        displayName: 'Build and Publish API container'
+      - job: API
+        pool: Default
+        steps:
+          - task: DockerInstaller@0
+            inputs:
+              dockerVersion: "17.09.0-ce"
+            displayName: "Install Docker"
 
-- stage: Deploy
-  jobs:
-  - job: WebApp
-    pool: Default
-    steps:
-    - task: DownloadBuildArtifacts@1
-      inputs:
-        buildType: 'current'
-        downloadType: 'single'
-        artifactName: 'virtual-theatre-web'
-        itemPattern: 'virtual-theatre-web/**'
-        downloadPath: '$(System.ArtifactsDirectory)'
-        cleanDestinationFolder: true
-      displayName: 'Download Web Artifacts'
+          - task: Docker@2
+            inputs:
+              containerRegistry: "Azure Container Registry"
+              repository: "vtheatre-api-main"
+              command: "buildAndPush"
+              Dockerfile: "api/Dockerfile"
+              buildContext: "api"
+            displayName: "Build and Publish API container"
 
-    - task: AzureWebApp@1
-      inputs:
-        azureSubscription: 'Azure subscription 1(faa5f0d4-459f-4fa4-9c64-a349dca6bd20)'
-        appType: 'webAppLinux'
-        appName: 'vtheatre-dev'
-        package: '$(System.ArtifactsDirectory)'
-        runtimeStack: 'NODE|18-lts'
-      displayName: 'Deploy Web Artifacts'
-  
-  - job: API
-    pool: Default
-    steps:
-    - task: AzureRmWebAppDeployment@4
-      inputs:
-        ConnectionType: 'AzureRM'
-        azureSubscription: 'Azure subscription 1(faa5f0d4-459f-4fa4-9c64-a349dca6bd20)'
-        appType: 'webAppContainer'
-        WebAppName: 'vtheatre-api'
-        DockerNamespace: 'vtheatre.azurecr.io'
-        DockerRepository: 'vtheatre-api-main'
-        DockerImageTag: '$(Build.BuildId)'
+  - stage: Deploy
+    jobs:
+      - job: WebApp
+        pool: Default
+        steps:
+          - task: DownloadBuildArtifacts@1
+            inputs:
+              buildType: "current"
+              downloadType: "single"
+              artifactName: "virtual-theatre-web"
+              itemPattern: "virtual-theatre-web/**"
+              downloadPath: "$(System.ArtifactsDirectory)"
+              cleanDestinationFolder: true
+            displayName: "Download Web Artifacts"
+
+          - task: AzureWebApp@1
+            inputs:
+              azureSubscription: "Azure subscription 1(faa5f0d4-459f-4fa4-9c64-a349dca6bd20)"
+              appType: "webAppLinux"
+              appName: "vtheatre-dev"
+              package: "$(System.ArtifactsDirectory)"
+              runtimeStack: "NODE|18-lts"
+            displayName: "Deploy Web Artifacts"
+
+      - job: API
+        pool: Default
+        steps:
+          - task: AzureRmWebAppDeployment@4
+            inputs:
+              ConnectionType: "AzureRM"
+              azureSubscription: "Azure subscription 1(faa5f0d4-459f-4fa4-9c64-a349dca6bd20)"
+              appType: "webAppContainer"
+              WebAppName: "vtheatre-api"
+              DockerNamespace: "vtheatre.azurecr.io"
+              DockerRepository: "vtheatre-api-main"
+              DockerImageTag: "$(Build.BuildId)"
